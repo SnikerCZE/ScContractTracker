@@ -1,3 +1,4 @@
+using ScContractTracker.App.Services;
 using ScContractTracker.Core.GameData;
 using Velopack;
 
@@ -9,7 +10,10 @@ public static class Program
     public static void Main(string[] args)
     {
         // Musí běžet jako první – Velopack při instalaci/aktualizaci spouští aplikaci s vlastními argumenty.
-        VelopackApp.Build().Run();
+        VelopackApp.Build()
+            .OnFirstRun(_ => InstallShortcuts.FirstRunAfterInstall = true)
+            .OnBeforeUninstallFastCallback(_ => InstallShortcuts.RemoveAll())
+            .Run();
 
         // Data.p4k používá kompresi Zstandard, kterou .NET neumí nativně.
         P4kArchive.ZstdFactory = s => new ZstdSharp.DecompressionStream(s);

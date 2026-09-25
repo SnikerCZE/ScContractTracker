@@ -24,6 +24,7 @@ public partial class App : Application
         var window = new MainWindow();
         MainWindow = window;
         window.Show();
+        InstallShortcuts.OfferAfterInstall(window);
     }
 
     private static bool _showingError;

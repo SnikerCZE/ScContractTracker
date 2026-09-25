@@ -248,5 +248,6 @@
   "Confirm.AbandonAll": "Označit všech {0} aktivních kontraktů jako opuštěné?",
   "Confirm.DeleteAll": "Smazat všech {0} kontraktů zobrazených v historii (podle aktuálního filtru období)? Nelze vrátit zpět.",
   "Mode.LogEndLabel": "Konec v logu",
-  "Mode.LogEndNote": "Jen pro informaci – aUEC/h se počítá od přijetí do ručního dokončení."
+  "Mode.LogEndNote": "Jen pro informaci – aUEC/h se počítá od přijetí do ručního dokončení.",
+  "Install.DesktopShortcutPrompt": "Vytvořit zástupce SC Contract Tracker na ploše?\n\nAplikaci najdeš také v nabídce Start."
 }

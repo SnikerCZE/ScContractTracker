@@ -248,5 +248,6 @@
   "Confirm.AbandonAll": "Mark all {0} active contracts as abandoned?",
   "Confirm.DeleteAll": "Delete all {0} contracts shown in history (current period filter)? This cannot be undone.",
   "Mode.LogEndLabel": "End in log",
-  "Mode.LogEndNote": "For information only – profit per hour uses the time from acceptance to manual completion."
+  "Mode.LogEndNote": "For information only – profit per hour uses the time from acceptance to manual completion.",
+  "Install.DesktopShortcutPrompt": "Create a SC Contract Tracker shortcut on the desktop?\n\nThe app is also available in the Start menu."
 }
