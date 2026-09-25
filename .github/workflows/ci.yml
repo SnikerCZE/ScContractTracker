@@ -5,11 +5,17 @@ on:
     branches: [ main ]
   pull_request:
 
+# Workflow jen čte kód – token GitHubu nemá žádná práva zápisu.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-dotnet@v6
         with:
