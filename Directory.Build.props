@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <!-- Jediné místo, kde se mění verze. Release workflow ji čte odsud. -->
+    <Version>0.1.0</Version>
+    <Product>SC Contract Tracker</Product>
+    <Company>Jiří Libich</Company>
+    <Copyright>© 2026 Jiří Libich</Copyright>
+    <!-- Přepíše se v CI na https://github.com/<owner>/<repo> -->
+    <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">https://github.com/SnikerCZE/ScContractTracker</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

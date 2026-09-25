@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Čistá knihovna bez NuGet závislostí: logika, která se dá testovat kdekoli. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>ScContractTracker.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ScContractTracker.Core.Tests" />
+  </ItemGroup>
+
+</Project>

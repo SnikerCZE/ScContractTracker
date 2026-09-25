@@ -1,0 +1,59 @@
+name: Release
+
+# Nová verze: git tag v0.2.0 && git push origin v0.2.0
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Verze (např. 0.2.0)'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  APP_ID: ScContractTracker
+  VPK_VERSION: 1.2.158   # musí odpovídat verzi balíčku Velopack v ScContractTracker.App.csproj
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version
+        id: ver
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then v="${{ github.event.inputs.version }}"; else v="${GITHUB_REF_NAME#v}"; fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          if [[ "$v" == *-* ]]; then echo "pre=--pre" >> "$GITHUB_OUTPUT"; else echo "pre=" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test tests/ScContractTracker.Core.Tests -c Release
+
+      - name: Publish
+        run: >
+          dotnet publish src/ScContractTracker.App/ScContractTracker.App.csproj
+          -c Release -r win-x64 --self-contained true -o publish
+          -p:Version=${{ steps.ver.outputs.version }}
+          -p:RepositoryUrl=https://github.com/${{ github.repository }}
+
+      - name: Velopack pack & upload
+        shell: pwsh
+        run: |
+          dotnet tool install -g vpk --version $env:VPK_VERSION
+          $repo = "https://github.com/${{ github.repository }}"
+          # Stáhne předchozí release kvůli delta aktualizacím (u prvního release selže, to nevadí)
+          vpk download github --repoUrl $repo --token ${{ secrets.GITHUB_TOKEN }} ${{ steps.ver.outputs.pre }}
+          if ($LASTEXITCODE -ne 0) { Write-Host "Předchozí release nenalezen – první vydání."; $global:LASTEXITCODE = 0 }
+          vpk pack -u $env:APP_ID -v ${{ steps.ver.outputs.version }} -p publish -e ScContractTracker.exe `
+                   --packTitle "SC Contract Tracker" -i src/ScContractTracker.App/Assets/app.ico
+          vpk upload github --repoUrl $repo --token ${{ secrets.GITHUB_TOKEN }} --publish ${{ steps.ver.outputs.pre }} `
+                   --releaseName "SC Contract Tracker ${{ steps.ver.outputs.version }}" --tag v${{ steps.ver.outputs.version }}

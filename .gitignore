@@ -1,0 +1,15 @@
+bin/
+obj/
+publish/
+Releases/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+TestResults/
+*.log
+
+# Interní poznámky k vývoji – jen lokálně, ne na GitHub
+CLAUDE.md
+docs/

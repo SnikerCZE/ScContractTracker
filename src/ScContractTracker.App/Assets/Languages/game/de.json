@@ -1,0 +1,85 @@
+{
+  "code": "de",
+  "name": "Deutsch",
+  "localizationFolder": "german_(germany)",
+  "ocrLanguageTag": "de-DE",
+  "notifications": {
+    "accepted": [
+      "Auftrag angenommen",
+      "Vertrag angenommen"
+    ],
+    "completed": [
+      "Auftrag abgeschlossen",
+      "Vertrag abgeschlossen"
+    ],
+    "failed": [
+      "Auftrag fehlgeschlagen",
+      "Vertrag fehlgeschlagen"
+    ],
+    "abandoned": [
+      "Auftrag abgebrochen",
+      "Auftrag aufgegeben"
+    ],
+    "withdrawn": [
+      "Auftrag zurückgezogen",
+      "Auftrag storniert"
+    ],
+    "newObjective": [
+      "Neues Ziel",
+      "Ziel aktualisiert"
+    ],
+    "reward": [
+      "Belohnung",
+      "Missions-Belohnung",
+      "Zahlung erhalten",
+      "aUEC erhalten"
+    ]
+  },
+  "mobiGlas": {
+    "contractsApp": [
+      "AUFTRÄGE",
+      "AUFTRAGSMANAGER",
+      "VERTRÄGE"
+    ],
+    "acceptedTab": [
+      "ANGENOMMEN"
+    ],
+    "rewardLabel": [
+      "BELOHNUNG"
+    ],
+    "contractorLabel": [
+      "AUFTRAGGEBER"
+    ],
+    "objectivesLabel": [
+      "HAUPTZIELE",
+      "ZIELE"
+    ],
+    "deadlineLabel": [
+      "AUFTRAGSFRIST",
+      "FRIST",
+      "ZEITLIMIT"
+    ],
+    "otherTabs": [
+      "ANGEBOTE",
+      "VERLAUF",
+      "HISTORIE",
+      "BAKEN",
+      "NOTRUF-BAKEN"
+    ],
+    "abandonButton": [
+      "ABBRECHEN",
+      "AUFGEBEN"
+    ],
+    "detailsLabel": [
+      "DETAILS"
+    ],
+    "bottomButtons": [
+      "ABBRECHEN",
+      "AUFGEBEN",
+      "TEILEN",
+      "VERFOLGEN",
+      "NICHT VERFOLGEN",
+      "ANNEHMEN"
+    ]
+  }
+}

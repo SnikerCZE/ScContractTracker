@@ -1,0 +1,74 @@
+<Window x:Class="ScContractTracker.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svc="clr-namespace:ScContractTracker.App.Services"
+        Style="{StaticResource WindowStyle}"
+        Title="{svc:Tr Settings.Title}"
+        Width="620" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <Border Style="{StaticResource Panel}" Margin="12">
+    <StackPanel Margin="8">
+        <TextBlock Text="{svc:Tr Settings.GamePath}" Style="{StaticResource SectionLabel}" Margin="0,0,0,4" />
+        <DockPanel>
+            <Button DockPanel.Dock="Right" Content="{svc:Tr Settings.Default}" Margin="6,0,0,0" Click="Default_Click" />
+            <Button DockPanel.Dock="Right" Content="{svc:Tr Settings.Browse}" Margin="6,0,0,0" Click="Browse_Click" />
+            <TextBox x:Name="GamePathBox" />
+        </DockPanel>
+
+        <Grid Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="{svc:Tr Settings.AppLanguage}" Style="{StaticResource SectionLabel}" />
+                <ComboBox x:Name="AppLanguageBox" DisplayMemberPath="Name" SelectedValuePath="Code" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="{svc:Tr Settings.GameLanguage}" Style="{StaticResource SectionLabel}" />
+                <ComboBox x:Name="GameLanguageBox" DisplayMemberPath="Name" SelectedValuePath="Code" />
+            </StackPanel>
+        </Grid>
+        <TextBlock Text="{svc:Tr Settings.GameLanguageHint}" Style="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11" Margin="0,4,0,0" />
+
+        <TextBlock Text="mobiGlas" Style="{StaticResource SectionLabel}" Margin="0,16,0,4" />
+        <CheckBox x:Name="OcrBox" Content="{svc:Tr Settings.Ocr}" />
+        <Grid Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="140" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="{svc:Tr Settings.OcrTrigger}" Style="{StaticResource FieldLabel}" Margin="0,0,0,2" />
+                <TextBlock Text="{svc:Tr Settings.OcrTriggerHint}" Style="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11.5" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="{svc:Tr Settings.OcrSeconds}" Style="{StaticResource FieldLabel}" Margin="0,0,0,2" />
+                <TextBox x:Name="OcrSecondsBox" />
+            </StackPanel>
+        </Grid>
+        <TextBlock Text="{svc:Tr Settings.CaptureMethod}" Style="{StaticResource FieldLabel}" Margin="0,8,0,2" />
+        <ComboBox x:Name="CaptureBox" Width="300" HorizontalAlignment="Left">
+            <ComboBoxItem Tag="Auto" Content="{svc:Tr Settings.CaptureAuto}" />
+            <ComboBoxItem Tag="WindowsGraphicsCapture" Content="{svc:Tr Settings.CaptureWgc}" />
+            <ComboBoxItem Tag="Gdi" Content="{svc:Tr Settings.CaptureGdi}" />
+        </ComboBox>
+        <TextBlock Text="{svc:Tr Settings.CaptureHint}" Style="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11" Margin="0,4,0,0" />
+        <CheckBox x:Name="ScreenshotsBox" Margin="0,8,0,0">
+            <TextBlock Text="{svc:Tr Settings.Screenshots}" TextWrapping="Wrap" />
+        </CheckBox>
+        <CheckBox x:Name="ClipboardBox" Content="{svc:Tr Settings.Clipboard}" Margin="0,4,0,0" />
+
+        <TextBlock Text="GitHub" Style="{StaticResource SectionLabel}" Margin="0,16,0,4" />
+        <CheckBox x:Name="UpdatesBox" Content="{svc:Tr Settings.Updates}" />
+        <CheckBox x:Name="PrereleaseBox" Content="{svc:Tr Settings.Prerelease}" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="{svc:Tr Settings.Save}" Style="{StaticResource AccentButton}" IsDefault="True" Click="Save_Click" MinWidth="90" />
+            <Button Content="{svc:Tr Settings.Cancel}" IsCancel="True" Margin="8,0,0,0" MinWidth="90" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

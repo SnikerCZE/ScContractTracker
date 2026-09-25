@@ -1,0 +1,647 @@
+[
+ {
+  "id": "stanton",
+  "name": "Stanton",
+  "type": "system",
+  "parent": null,
+  "aliases": [
+   "Stanton system"
+  ],
+  "position": null
+ },
+ {
+  "id": "pyro",
+  "name": "Pyro",
+  "type": "system",
+  "parent": null,
+  "aliases": [
+   "Pyro system"
+  ],
+  "position": null
+ },
+ {
+  "id": "hurston",
+  "name": "Hurston",
+  "type": "planet",
+  "parent": "stanton",
+  "aliases": [
+   "Stanton1"
+  ],
+  "position": null
+ },
+ {
+  "id": "arial",
+  "name": "Arial",
+  "type": "moon",
+  "parent": "hurston",
+  "aliases": [
+   "Stanton1a"
+  ],
+  "position": null
+ },
+ {
+  "id": "aberdeen",
+  "name": "Aberdeen",
+  "type": "moon",
+  "parent": "hurston",
+  "aliases": [
+   "Stanton1b"
+  ],
+  "position": null
+ },
+ {
+  "id": "magda",
+  "name": "Magda",
+  "type": "moon",
+  "parent": "hurston",
+  "aliases": [
+   "Stanton1c"
+  ],
+  "position": null
+ },
+ {
+  "id": "ita",
+  "name": "Ita",
+  "type": "moon",
+  "parent": "hurston",
+  "aliases": [
+   "Stanton1d"
+  ],
+  "position": null
+ },
+ {
+  "id": "lorville",
+  "name": "Lorville",
+  "type": "city",
+  "parent": "hurston",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "everus_harbor",
+  "name": "Everus Harbor",
+  "type": "station",
+  "parent": "hurston",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "hur_l1",
+  "name": "HUR-L1 Green Glade Station",
+  "type": "lagrange",
+  "parent": "hurston",
+  "aliases": [
+   "HUR-L1",
+   "HUR L1",
+   "RR_HUR_L1",
+   "Green Glade Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "hur_l2",
+  "name": "HUR-L2 Faithful Dream Station",
+  "type": "lagrange",
+  "parent": "hurston",
+  "aliases": [
+   "HUR-L2",
+   "HUR L2",
+   "RR_HUR_L2",
+   "Faithful Dream Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "hur_l3",
+  "name": "HUR-L3 Thundering Express Station",
+  "type": "lagrange",
+  "parent": "hurston",
+  "aliases": [
+   "HUR-L3",
+   "HUR L3",
+   "RR_HUR_L3",
+   "Thundering Express Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "hur_l4",
+  "name": "HUR-L4 Melodic Fields Station",
+  "type": "lagrange",
+  "parent": "hurston",
+  "aliases": [
+   "HUR-L4",
+   "HUR L4",
+   "RR_HUR_L4",
+   "Melodic Fields Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "hur_l5",
+  "name": "HUR-L5 High Course Station",
+  "type": "lagrange",
+  "parent": "hurston",
+  "aliases": [
+   "HUR-L5",
+   "HUR L5",
+   "RR_HUR_L5",
+   "High Course Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "crusader",
+  "name": "Crusader",
+  "type": "planet",
+  "parent": "stanton",
+  "aliases": [
+   "Stanton2"
+  ],
+  "position": null
+ },
+ {
+  "id": "cellin",
+  "name": "Cellin",
+  "type": "moon",
+  "parent": "crusader",
+  "aliases": [
+   "Stanton2a"
+  ],
+  "position": null
+ },
+ {
+  "id": "daymar",
+  "name": "Daymar",
+  "type": "moon",
+  "parent": "crusader",
+  "aliases": [
+   "Stanton2b"
+  ],
+  "position": null
+ },
+ {
+  "id": "yela",
+  "name": "Yela",
+  "type": "moon",
+  "parent": "crusader",
+  "aliases": [
+   "Stanton2c"
+  ],
+  "position": null
+ },
+ {
+  "id": "orison",
+  "name": "Orison",
+  "type": "city",
+  "parent": "crusader",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "seraphim_station",
+  "name": "Seraphim Station",
+  "type": "station",
+  "parent": "crusader",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "cru_l1",
+  "name": "CRU-L1 Ambitious Dream Station",
+  "type": "lagrange",
+  "parent": "crusader",
+  "aliases": [
+   "CRU-L1",
+   "CRU L1",
+   "RR_CRU_L1",
+   "Ambitious Dream Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "cru_l4",
+  "name": "CRU-L4 Shallow Fields Station",
+  "type": "lagrange",
+  "parent": "crusader",
+  "aliases": [
+   "CRU-L4",
+   "CRU L4",
+   "RR_CRU_L4",
+   "Shallow Fields Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "cru_l5",
+  "name": "CRU-L5 Beautiful Glen Station",
+  "type": "lagrange",
+  "parent": "crusader",
+  "aliases": [
+   "CRU-L5",
+   "CRU L5",
+   "RR_CRU_L5",
+   "Beautiful Glen Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "arccorp",
+  "name": "ArcCorp",
+  "type": "planet",
+  "parent": "stanton",
+  "aliases": [
+   "Stanton3"
+  ],
+  "position": null
+ },
+ {
+  "id": "lyria",
+  "name": "Lyria",
+  "type": "moon",
+  "parent": "arccorp",
+  "aliases": [
+   "Stanton3a"
+  ],
+  "position": null
+ },
+ {
+  "id": "wala",
+  "name": "Wala",
+  "type": "moon",
+  "parent": "arccorp",
+  "aliases": [
+   "Stanton3b"
+  ],
+  "position": null
+ },
+ {
+  "id": "area18",
+  "name": "Area18",
+  "type": "city",
+  "parent": "arccorp",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "baijini_point",
+  "name": "Baijini Point",
+  "type": "station",
+  "parent": "arccorp",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "arc_l1",
+  "name": "ARC-L1 Wide Forest Station",
+  "type": "lagrange",
+  "parent": "arccorp",
+  "aliases": [
+   "ARC-L1",
+   "ARC L1",
+   "RR_ARC_L1",
+   "Wide Forest Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "arc_l2",
+  "name": "ARC-L2 Lively Pathway Station",
+  "type": "lagrange",
+  "parent": "arccorp",
+  "aliases": [
+   "ARC-L2",
+   "ARC L2",
+   "RR_ARC_L2",
+   "Lively Pathway Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "arc_l3",
+  "name": "ARC-L3 Modern Express Station",
+  "type": "lagrange",
+  "parent": "arccorp",
+  "aliases": [
+   "ARC-L3",
+   "ARC L3",
+   "RR_ARC_L3",
+   "Modern Express Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "arc_l4",
+  "name": "ARC-L4 Faint Glen Station",
+  "type": "lagrange",
+  "parent": "arccorp",
+  "aliases": [
+   "ARC-L4",
+   "ARC L4",
+   "RR_ARC_L4",
+   "Faint Glen Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "arc_l5",
+  "name": "ARC-L5 Yellow Core Station",
+  "type": "lagrange",
+  "parent": "arccorp",
+  "aliases": [
+   "ARC-L5",
+   "ARC L5",
+   "RR_ARC_L5",
+   "Yellow Core Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "microtech",
+  "name": "microTech",
+  "type": "planet",
+  "parent": "stanton",
+  "aliases": [
+   "Stanton4"
+  ],
+  "position": null
+ },
+ {
+  "id": "calliope",
+  "name": "Calliope",
+  "type": "moon",
+  "parent": "microtech",
+  "aliases": [
+   "Stanton4a"
+  ],
+  "position": null
+ },
+ {
+  "id": "clio",
+  "name": "Clio",
+  "type": "moon",
+  "parent": "microtech",
+  "aliases": [
+   "Stanton4b"
+  ],
+  "position": null
+ },
+ {
+  "id": "euterpe",
+  "name": "Euterpe",
+  "type": "moon",
+  "parent": "microtech",
+  "aliases": [
+   "Stanton4c"
+  ],
+  "position": null
+ },
+ {
+  "id": "new_babbage",
+  "name": "New Babbage",
+  "type": "city",
+  "parent": "microtech",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "port_tressler",
+  "name": "Port Tressler",
+  "type": "station",
+  "parent": "microtech",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "mic_l1",
+  "name": "MIC-L1 Shallow Frontier Station",
+  "type": "lagrange",
+  "parent": "microtech",
+  "aliases": [
+   "MIC-L1",
+   "MIC L1",
+   "RR_MIC_L1",
+   "Shallow Frontier Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "mic_l2",
+  "name": "MIC-L2 Long Forest Station",
+  "type": "lagrange",
+  "parent": "microtech",
+  "aliases": [
+   "MIC-L2",
+   "MIC L2",
+   "RR_MIC_L2",
+   "Long Forest Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "mic_l3",
+  "name": "MIC-L3 Endless Odyssey Station",
+  "type": "lagrange",
+  "parent": "microtech",
+  "aliases": [
+   "MIC-L3",
+   "MIC L3",
+   "RR_MIC_L3",
+   "Endless Odyssey Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "mic_l4",
+  "name": "MIC-L4 Red Crossroads Station",
+  "type": "lagrange",
+  "parent": "microtech",
+  "aliases": [
+   "MIC-L4",
+   "MIC L4",
+   "RR_MIC_L4",
+   "Red Crossroads Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "mic_l5",
+  "name": "MIC-L5 Modern Icarus Station",
+  "type": "lagrange",
+  "parent": "microtech",
+  "aliases": [
+   "MIC-L5",
+   "MIC L5",
+   "RR_MIC_L5",
+   "Modern Icarus Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "grim_hex",
+  "name": "GrimHEX",
+  "type": "station",
+  "parent": "yela",
+  "aliases": [
+   "Grim HEX"
+  ],
+  "position": null
+ },
+ {
+  "id": "pyro1",
+  "name": "Pyro I",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro1"
+  ],
+  "position": null
+ },
+ {
+  "id": "monox",
+  "name": "Monox",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro II",
+   "Pyro2"
+  ],
+  "position": null
+ },
+ {
+  "id": "bloom",
+  "name": "Bloom",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro III",
+   "Pyro3"
+  ],
+  "position": null
+ },
+ {
+  "id": "pyro4",
+  "name": "Pyro IV",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro4"
+  ],
+  "position": null
+ },
+ {
+  "id": "pyro5",
+  "name": "Pyro V",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro5"
+  ],
+  "position": null
+ },
+ {
+  "id": "terminus",
+  "name": "Terminus",
+  "type": "planet",
+  "parent": "pyro",
+  "aliases": [
+   "Pyro VI",
+   "Pyro6"
+  ],
+  "position": null
+ },
+ {
+  "id": "ignis",
+  "name": "Ignis",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "vatra",
+  "name": "Vatra",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "adir",
+  "name": "Adir",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "fairo",
+  "name": "Fairo",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "fuego",
+  "name": "Fuego",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "vuur",
+  "name": "Vuur",
+  "type": "moon",
+  "parent": "pyro5",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "ruin_station",
+  "name": "Ruin Station",
+  "type": "station",
+  "parent": "pyro",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "checkmate",
+  "name": "Checkmate",
+  "type": "station",
+  "parent": "pyro",
+  "aliases": [
+   "Checkmate Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "orbituary",
+  "name": "Orbituary",
+  "type": "station",
+  "parent": "pyro",
+  "aliases": [],
+  "position": null
+ },
+ {
+  "id": "stanton_gateway",
+  "name": "Stanton Gateway",
+  "type": "station",
+  "parent": "pyro",
+  "aliases": [
+   "Stanton Gateway Station"
+  ],
+  "position": null
+ },
+ {
+  "id": "pyro_gateway",
+  "name": "Pyro Gateway",
+  "type": "station",
+  "parent": "stanton",
+  "aliases": [
+   "Pyro Gateway Station"
+  ],
+  "position": null
+ }
+]

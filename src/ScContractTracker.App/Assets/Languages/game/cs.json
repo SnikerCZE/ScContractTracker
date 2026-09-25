@@ -1,0 +1,86 @@
+{
+  "code": "cs",
+  "name": "Čeština",
+  "localizationFolder": "czech_(czech_republic)",
+  "ocrLanguageTag": "cs-CZ",
+  "notifications": {
+    "accepted": [
+      "Kontrakt přijat",
+      "Zakázka přijata"
+    ],
+    "completed": [
+      "Kontrakt dokončen",
+      "Zakázka dokončena"
+    ],
+    "failed": [
+      "Kontrakt selhal",
+      "Zakázka selhala"
+    ],
+    "abandoned": [
+      "Kontrakt opuštěn",
+      "Kontrakt zrušen",
+      "Zakázka opuštěna"
+    ],
+    "withdrawn": [
+      "Kontrakt stažen",
+      "Zakázka stažena"
+    ],
+    "newObjective": [
+      "Nový cíl",
+      "Cíl aktualizován"
+    ],
+    "reward": [
+      "Odměna",
+      "Platba přijata",
+      "aUEC přijato"
+    ]
+  },
+  "mobiGlas": {
+    "contractsApp": [
+      "KONTRAKTY",
+      "ZAKÁZKY",
+      "SPRÁVCE KONTRAKTŮ"
+    ],
+    "acceptedTab": [
+      "PŘIJATÉ",
+      "PŘIJATO"
+    ],
+    "rewardLabel": [
+      "ODMĚNA"
+    ],
+    "contractorLabel": [
+      "ZADAVATEL",
+      "KONTRAKTOR"
+    ],
+    "objectivesLabel": [
+      "HLAVNÍ CÍLE",
+      "CÍLE"
+    ],
+    "deadlineLabel": [
+      "TERMÍN KONTRAKTU",
+      "TERMÍN",
+      "ZBÝVÁ"
+    ],
+    "otherTabs": [
+      "NABÍDKY",
+      "HISTORIE",
+      "MAJÁKY"
+    ],
+    "abandonButton": [
+      "OPUSTIT",
+      "VZDÁT"
+    ],
+    "detailsLabel": [
+      "PODROBNOSTI",
+      "DETAILY"
+    ],
+    "bottomButtons": [
+      "OPUSTIT",
+      "VZDÁT",
+      "SDÍLET",
+      "SLEDOVAT",
+      "NESLEDOVAT",
+      "PŘIJMOUT"
+    ]
+  }
+}

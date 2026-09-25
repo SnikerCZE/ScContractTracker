@@ -1,0 +1,79 @@
+{
+  "code": "en",
+  "name": "English",
+  "localizationFolder": "english",
+  "ocrLanguageTag": "en-US",
+  "notifications": {
+    "accepted": [
+      "Contract Accepted"
+    ],
+    "completed": [
+      "Contract Complete",
+      "Contract Completed"
+    ],
+    "failed": [
+      "Contract Failed"
+    ],
+    "abandoned": [
+      "Contract Abandoned"
+    ],
+    "withdrawn": [
+      "Contract Withdrawn",
+      "Contract Cancelled",
+      "Contract Canceled"
+    ],
+    "newObjective": [
+      "New Objective",
+      "Objective Updated"
+    ],
+    "reward": [
+      "Awarded",
+      "Payment Received",
+      "Reward",
+      "aUEC received"
+    ]
+  },
+  "mobiGlas": {
+    "contractsApp": [
+      "CONTRACTS",
+      "CONTRACT MANAGER"
+    ],
+    "acceptedTab": [
+      "ACCEPTED"
+    ],
+    "rewardLabel": [
+      "REWARD"
+    ],
+    "contractorLabel": [
+      "CONTRACTED BY",
+      "CONTRACTOR"
+    ],
+    "objectivesLabel": [
+      "PRIMARY OBJECTIVES",
+      "OBJECTIVES"
+    ],
+    "deadlineLabel": [
+      "CONTRACT DEADLINE",
+      "DEADLINE",
+      "TIME LEFT"
+    ],
+    "otherTabs": [
+      "OFFERS",
+      "HISTORY",
+      "BEACONS"
+    ],
+    "abandonButton": [
+      "ABANDON"
+    ],
+    "detailsLabel": [
+      "DETAILS"
+    ],
+    "bottomButtons": [
+      "ABANDON",
+      "SHARE",
+      "TRACK",
+      "UNTRACK",
+      "ACCEPT"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+﻿Čas: 2026-09-24T12:34:53.0663174+02:00
+Zdroj snímku: WGC okno (3440×1440)
+OCR jazyk: en-US (požadovaný en-US)
+Jazyk hry: en, ListColumnSplit: 0,42
+Contracts: True, Accepted: False
+
+== Seznam (vlevo) ==
+
+== OCR řádky (x; y; šířka; výška | text) ==
+0.199; 0.103; 0.053; 0.013 | MARK ALL READ
+0.388; 0.104; 0.026; 0.013 | OFFERS
+0.438; 0.105; 0.058; 0.014 | ACCEPTED (1/10)
+0.520; 0.105; 0.028; 0.013 | HISTORY
+0.572; 0.106; 0.030; 0.013 | BEACONS
+0.801; 0.106; 0.007; 0.015 | x
+0.633; 0.185; 0.021; 0.012 | Reward
+0.771; 0.186; 0.027; 0.013 | Ä 19.750
+0.189; 0.197; 0.060; 0.022 | 0 REFUELING
+0.527; 0.201; 0.033; 0.037 | 0 Rep]
+0.327; 0.201; 0.003; 0.012 | 1
+0.392; 0.206; 0.102; 0.025 | UWC'S HIRING REFUELE
+0.632; 0.206; 0.050; 0.013 | Contract Deadline
+0.785; 0.208; 0.012; 0.013 | N/A
+0.632; 0.228; 0.040; 0.015 | Contracted By
+0.732; 0.229; 0.064; 0.015 | United Wayfarers Club
+0.201; 0.260; 0.101; 0.012 | UWC•S HIRING REFUELERS (200 REPI
+0.338; 0.267; 0.010; 0.012 | 19k
+0.201; 0.278; 0.056; 0.008 | UNITED WAYFARERS CLUB
+0.393; 0.294; 0.039; 0.016 | DETAILS
+0.604; 0.294; 0.100; 0.016 | PRIMARY OBJECTIVES
+0.393; 0.329; 0.010; 0.014 | Hey!
+0.603; 0.330; 0.091; 0.016 | O Go to Asteroid Mining Base
+0.393; 0.360; 0.104; 0.014 | DD from the United Wayfarers Club here.
+0.393; 0.392; 0.162; 0.013 | The UWC offers repair, rearming and refueling services across
+0.393; 0.407; 0.158; 0.014 | the UEE. It just so happens that we're on the look-out for new
+0.393; 0.422; 0.170; 0.014 | affiliates whose ships are fitted for refueling. If you've got the fuel
+0.393; 0.438; 0.155; 0.014 | pods and like it when people are pleased to see you, the UWC
+0.393; 0.454; 0.065; 0.013 | might be the club for you.
+0.393; 0.485; 0.162; 0.014 | And if you think it might be, I've got a live beacon you might like.
+0.393; 0.516; 0.168; 0.014 | If you do happen to like it, a word to the wise: make sure your fuel
+0.393; 0.532; 0.086; 0.014 | pods are full before you head out.
+0.392; 0.563; 0.153; 0.014 | A Club member has run out of 6 SCU of Hydrogen Fuel at an
+0.392; 0.578; 0.161; 0.014 | asteroid mining base. I'm not sure on the details, like how they
+0.392; 0.594; 0.165; 0.015 | ended up out there with no Go Juice, but the UWC doesn't like to
+0.392; 0.611; 0.047; 0.014 | leave folk hanging.
+0.391; 0.642; 0.167; 0.015 | The client vessel will pay you at the rate of 960 aUEC per SCU of
+0.391; 0.658; 0.164; 0.015 | Hydrogen. As a United Wayfarers Club contractor. you will also
+0.391; 0.674; 0.160; 0.015 | qualify for the UWC service fee listed above upon completion.
+0.390; 0.707; 0.165; 0.015 | It's a straightforward run. Perfect if you want to get a feel for
+0.390; 0.724; 0.159; 0.013 | this kind of job. Get out there. fill LID the tanks of their Drake
+0.779; 0.788; 0.033; 0.013 | UNTRACK
+0.734; 0.788; 0.023; 0.012 | SHARE
+0.385; 0.794; 0.034; 0.013 | ABANDON
+0.742; 0.919; 0.021; 0.009 | VEHICLES
+0.637; 0.922; 0.008; 0.008 | REP
+0.669; 0.922; 0.017; 0.008 | WALLET
+0.706; 0.922; 0.018; 0.008 | LANDING
+0.594; 0.922; 0.017; 0.009 | ASSETS
+0.477; 0.924; 0.027; 0.010 | CONTRACTS
+0.556; 0.924; 0.020; 0.009 | JOURNAL
+0.444; 0.925; 0.016; 0.009 | COMMS
+0.522; 0.925; 0.012; 0.008 | MAPS
+0.406; 0.926; 0.017; 0.009 | HEALTH
+0.273; 0.927; 0.024; 0.008 | — SNIKER
+0.370; 0.928; 0.012; 0.009 | HOME

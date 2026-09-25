@@ -1,0 +1,83 @@
+﻿Čas: 2026-09-24T12:57:41.9252695+02:00
+Zdroj snímku: WGC okno (3440×1440)
+OCR jazyk: en-US (požadovaný en-US)
+Jazyk hry: en, ListColumnSplit: 0,42
+Contracts: True, Accepted: True
+
+== Seznam (vlevo) ==
+  ENTRY LVL. COURIER NEEDED IN | 37000
+== Detail (vpravo) ==
+  Název: ENTRY LVL. COURIER NE
+  Zadavatel: Ftl Courier
+  Odměna: 37250
+  Cíl: Deliver Food Supplies to HDMS-Edmond.
+  Cíl: Collect Food Supplies from Covalex Distribution
+  Cíl: Center SIDC06 on Hurston.
+
+== OCR řádky (x; y; šířka; výška | text) ==
+0.187; 0.097; 0.065; 0.018 | Ø MARK ALL READ
+0.388; 0.103; 0.026; 0.013 | OFFERS
+0.437; 0.103; 0.058; 0.013 | ACCEPTED (2/10)
+0.520; 0.103; 0.028; 0.013 | HISTORY
+0.802; 0.103; 0.007; 0.015 | x
+0.571; 0.104; 0.031; 0.013 | BEACONS
+0.392; 0.180; 0.106; 0.024 | ENTRY LVL. COURIER NE
+0.528; 0.181; 0.049; 0.024 | N STANTON
+0.633; 0.183; 0.022; 0.011 | Reward
+0.771; 0.184; 0.027; 0.013 | Ä 37.250
+0.189; 0.194; 0.060; 0.022 | O REFUELING
+0.328; 0.199; 0.003; 0.012 | 1
+0.632; 0.203; 0.051; 0.013 | Contract Deadline
+0.785; 0.206; 0.012; 0.013 | N/A
+0.418; 0.215; 0.075; 0.038 | [100-500 Rep]
+0.632; 0.226; 0.040; 0.015 | Contracted By
+0.766; 0.227; 0.031; 0.012 | Ftl Courier
+0.207; 0.260; 0.035; 0.015 | COURIER
+0.329; 0.263; 0.003; 0.012 | 1
+0.393; 0.291; 0.038; 0.016 | DETAILS
+0.603; 0.292; 0.101; 0.017 | PRIMARY OBJECTIVES
+0.202; 0.323; 0.088; 0.010 | ENTRY LVL. COURIER NEEDED IN
+0.393; 0.327; 0.067; 0.010 | AVAILABLE FTL CONTRACT
+0.339; 0.328; 0.010; 0.011 | 37k
+0.603; 0.328; 0.130; 0.015 | O Deliver Food Supplies to HDMS-Edmond.
+0.202; 0.338; 0.082; 0.011 | STANTON noo-soo REPI
+0.393; 0.342; 0.075; 0.011 | FOR IMMEDIATE ASSIGNMENT
+0.331; 0.347; 0.019; 0.009 | 4m 289
+0.614; 0.353; 0.151; 0.015 | o Collect Food Supplies from Covalex Distribution
+0.203; 0.355; 0.028; 0.008 | FTL COURIER
+0.623; 0.371; 0.083; 0.013 | Center SIDC06 on Hurston.
+0.393; 0.390; 0.170; 0.013 | A reliable and hardworking entry-level courier is needed to ferry a
+0.394; 0.405; 0.049; 0.014 | delivery in Stanton.
+0.393; 0.420; 0.158; 0.014 | You will be responsible for providing your own transportation.
+0.394; 0.436; 0.168; 0.013 | Interested contractors need the ability to lift up to .25 SCU boxes.
+0.393; 0.451; 0.168; 0.014 | Contractors are employed on an independent basis and therefore
+0.393; 0.467; 0.106; 0.014 | not covered by FTL's company insurance.
+0.393; 0.498; 0.089; 0.014 | Good luck and good speed, courier!
+0.393; 0.529; 0.061; 0.012 | POTENTIAL BLUEPRINTS
+0.393; 0.546; 0.052; 0.010 | - [IND-SO-B] Defiant
+0.393; 0.561; 0.056; 0.011 | - [INO-SI-B] Colossus
+0.392; 0.577; 0.061; 0.011 | - [IND-SI-BI Endurance
+0.392; 0.593; 0.055; 0.010 | - [IND-S2-B] Huracan
+0.392; 0.608; 0.054; 0.014 | - [IND-S2-Bl Sedulity
+0.392; 0.624; 0.044; 0.014 | - CIND-S3-B] Agni
+0.391; 0.656; 0.045; 0.012 | MISSION DETAILS
+0.391; 0.673; 0.051; 0.014 | Mission Type: Chain
+0.432; 0.687; 0.133; 0.015 | Combat 2/7 1 Complexity 3/7 1 Risk 2/7 1 Knowledge
+0.391; 0.689; 0.040; 0.015 | Difficulty (1-7):
+0.390; 0.706; 0.009; 0.011 | 3/7
+0.390; 0.722; 0.044; 0.012 | Neutral: 100 Reo
+0.789; 0.785; 0.024; 0.013 | TRACK
+0.744; 0.785; 0.023; 0.013 | SHARE
+0.385; 0.791; 0.035; 0.013 | ABANDON
+0.669; 0.918; 0.017; 0.009 | WALLET
+0.706; 0.918; 0.018; 0.008 | LANDING
+0.742; 0.918; 0.021; 0.008 | VEHICLES
+0.637; 0.919; 0.008; 0.009 | REP
+0.522; 0.921; 0.012; 0.009 | MAps
+0.595; 0.921; 0.017; 0.009 | ASSETS
+0.477; 0.922; 0.027; 0.010 | CONTRACTS
+0.556; 0.922; 0.020; 0.008 | JOURNAL
+0.445; 0.924; 0.016; 0.009 | COMMS
+0.370; 0.924; 0.012; 0.009 | HOME
+0.282; 0.925; 0.015; 0.009 | SMKER
+0.406; 0.925; 0.017; 0.008 | HEALTH

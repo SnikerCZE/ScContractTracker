@@ -1,0 +1,66 @@
+﻿Čas: 2026-09-24T18:13:15.7917722+02:00
+Zdroj snímku: WGC okno (3440×1440)
+OCR jazyk: en-US (požadovaný en-US)
+Jazyk hry: en, ListColumnSplit: 0,42
+Contracts: True, Accepted: False
+
+== Seznam (vlevo) ==
+
+== OCR řádky (x; y; šířka; výška | text) ==
+0.199; 0.099; 0.053; 0.013 | MARK ALL READ
+0.388; 0.101; 0.026; 0.013 | OFFERS
+0.438; 0.102; 0.051; 0.013 | ACCEPTED (1/1
+0.520; 0.102; 0.028; 0.013 | HISTORY
+0.571; 0.103; 0.031; 0.013 | BEACONS
+0.801; 0.103; 0.007; 0.015 | x
+0.633; 0.183; 0.021; 0.011 | Reward
+0.771; 0.183; 0.027; 0.013 | Ä 19.750
+0.188; 0.193; 0.060; 0.022 | O REFUELING
+0.509; 0.197; 0.051; 0.038 | [200 Rep]
+0.327; 0.199; 0.003; 0.012 | 1
+0.392; 0.203; 0.113; 0.025 | UWC'S HIRING REFUELERS
+0.631; 0.203; 0.051; 0.013 | Contract Deadline
+0.785; 0.205; 0.012; 0.013 | N/A
+0.632; 0.225; 0.040; 0.015 | Contracted By
+0.732; 0.226; 0.065; 0.015 | United Wayfarers Club
+0.200; 0.256; 0.101; 0.012 | UWC•S HIRING REFUELERS (200 REPI
+0.338; 0.264; 0.010; 0.012 | 19k
+0.201; 0.275; 0.056; 0.008 | UNITED WAYFARERS CLUB
+0.393; 0.290; 0.038; 0.017 | DETAILS
+0.603; 0.291; 0.100; 0.017 | PRIMARY OBJECTIVES
+0.393; 0.326; 0.010; 0.013 | Hey!
+0.603; 0.327; 0.165; 0.016 | O Go to a Hurston Weapons Testing Site above Magda
+0.393; 0.358; 0.105; 0.013 | DD from the United Wayfarers Club here.
+0.393; 0.389; 0.162; 0.013 | The UWC offers repair, rearming and refueling services across
+0.393; 0.404; 0.157; 0.014 | the UEE. It just so happens that we're on the look-out for new
+0.393; 0.419; 0.170; 0.014 | affiliates whose ships are fitted for refueling. If you've got the fuel
+0.393; 0.435; 0.155; 0.014 | pods and like it when people are pleased to see you. the UWC
+0.393; 0.451; 0.065; 0.013 | might be the club for you.
+0.393; 0.481; 0.162; 0.015 | And if you think it might be, I've got a live beacon you might like.
+0.393; 0.513; 0.168; 0.014 | If you do happen to like it, a word to the wise: make sure your fuel
+0.393; 0.529; 0.086; 0.013 | pods are full before you head out.
+0.392; 0.560; 0.150; 0.013 | A Club member has run out of 6 SCU of Hydrogen Fuel at a
+0.392; 0.575; 0.165; 0.015 | Hurston Weapons Testing Site above Magda. I'm not sure on the
+0.392; 0.591; 0.169; 0.015 | details. like how they ended up out there with no Go Juice, but the
+0.392; 0.608; 0.099; 0.014 | UWC doesn't like to leave folk hanging.
+0.391; 0.639; 0.167; 0.015 | The client vessel will pay you at the rate of 960 alJEC per SCU of
+0.391; 0.655; 0.164; 0.015 | Hydrogen. As a United Wayfarers Club contractor, you will also
+0.391; 0.672; 0.160; 0.015 | qualify for the UWC service fee listed above upon completion.
+0.390; 0.703; 0.165; 0.016 | It's a straightforward run. Perfect if you want to get a feel for
+0.390; 0.720; 0.158; 0.014 | this kind of job. Get out there. fill up the tanks of their Aeqis
+0.779; 0.784; 0.033; 0.013 | UNTRACK
+0.734; 0.785; 0.023; 0.012 | SHARE
+0.385; 0.790; 0.035; 0.013 | ABANDON
+0.276; 0.901; 0.047; 0.017 | Ä 1,000.000
+0.742; 0.917; 0.021; 0.009 | VEHICLES
+0.669; 0.917; 0.017; 0.009 | WALLET
+0.636; 0.918; 0.008; 0.009 | REP
+0.706; 0.918; 0.018; 0.008 | LANDING
+0.594; 0.919; 0.017; 0.010 | ASSETS
+0.476; 0.920; 0.027; 0.010 | CONTRACTS
+0.522; 0.921; 0.012; 0.009 | MAPS
+0.556; 0.921; 0.020; 0.008 | JOURNAL
+0.444; 0.922; 0.016; 0.009 | COMMS
+0.282; 0.924; 0.015; 0.009 | PLAYER
+0.406; 0.924; 0.017; 0.009 | HEALTH
+0.370; 0.925; 0.012; 0.008 | HOME

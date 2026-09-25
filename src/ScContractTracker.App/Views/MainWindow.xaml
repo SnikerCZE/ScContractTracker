@@ -1,0 +1,777 @@
+<Window x:Class="ScContractTracker.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svc="clr-namespace:ScContractTracker.App.Services"
+        xmlns:vm="clr-namespace:ScContractTracker.App.ViewModels"
+        Style="{StaticResource WindowStyle}"
+        Title="{Binding WindowTitle}"
+        Topmost="{Binding AlwaysOnTop}"
+        Icon="/Assets/app.ico"
+        Width="1100" Height="760" MinWidth="720" MinHeight="480"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Most k DataContextu okna pro hlavičky sloupců (sloupce DataGridu nejsou ve vizuálním stromu) -->
+        <svc:BindingProxy x:Key="VmProxy" Data="{Binding}" />
+        <!-- ===== Kompaktní karta kontraktu (2–3 řádky): typ, zadavatel, název, přijetí, aktuální úkol, tlačítka ===== -->
+        <DataTemplate x:Key="ContractCompact" DataType="{x:Type vm:ContractViewModel}">
+            <Border Style="{StaticResource Card}" Padding="12,9" Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding ToggleCommand}" />
+                </Border.InputBindings>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ToggleButton Grid.RowSpan="3" Style="{StaticResource ExpandToggle}" VerticalAlignment="Top" Margin="0,2,12,0"
+                                  IsChecked="{Binding IsExpanded}" ToolTip="{svc:Tr Active.Toggle}" />
+
+                    <!-- 1. řádek: typ · zadavatel | odměna · přijato · doba -->
+                    <DockPanel Grid.Column="1" LastChildFill="True">
+                        <Border DockPanel.Dock="Left" Style="{StaticResource Chip}">
+                            <TextBlock Text="{Binding TypeDisplay, Converter={StaticResource Upper}}" Style="{StaticResource ChipText}" />
+                        </Border>
+                        <Button DockPanel.Dock="Right" Content="✎" Padding="7,0" FontSize="12" Margin="6,0,0,0" ToolTip="{svc:Tr Edit.Title}"
+                                Command="{Binding DataContext.EditContractCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}" />
+                        <Button DockPanel.Dock="Right" Style="{StaticResource ModeChip}" Content="{Binding ModeText}" Margin="6,0,0,0"
+                                ToolTip="{svc:Tr Mode.CardHint}"
+                                Command="{Binding DataContext.ToggleModeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}" />
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding LogEndHint}" Foreground="{StaticResource DiamondBrush}" FontSize="11.5"
+                                   Margin="6,0,0,0" VerticalAlignment="Center" Visibility="{Binding HasLogEndHint, Converter={StaticResource BoolToVis}}" />
+                        <TextBlock DockPanel.Dock="Right" Text="⚠" Foreground="{StaticResource DiamondBrush}" Margin="6,0,0,0" VerticalAlignment="Center"
+                                   ToolTip="{svc:Tr Active.Stale}" Visibility="{Binding IsStale, Converter={StaticResource BoolToVis}}" />
+                        <TextBlock Text="{Binding GiverName}" Foreground="{StaticResource LabelBrush}" FontFamily="{StaticResource HeaderFont}"
+                                   FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                    </DockPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,0,0">
+                        <TextBlock Text="{Binding RewardDisplay}" FontFamily="{StaticResource HeaderFont}" FontWeight="SemiBold" FontSize="14" />
+                        <TextBlock Text="  ·  " Style="{StaticResource Muted}" />
+                        <TextBlock Style="{StaticResource FieldLabel}">
+                            <Run Text="{svc:Tr Active.AcceptedShort}" />
+                            <Run Text="{Binding AcceptedShort, Mode=OneWay}" Foreground="{StaticResource TextBrush}" />
+                        </TextBlock>
+                        <TextBlock Text="  ·  " Style="{StaticResource Muted}" />
+                        <TextBlock Text="{Binding ElapsedShort}" FontFamily="{StaticResource HeaderFont}" FontWeight="SemiBold"
+                                   Foreground="{StaticResource ActiveBorderBrush}" />
+                    </StackPanel>
+
+                    <!-- 2. řádek: název -->
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,4,0,3"
+                               Text="{Binding Title, Converter={StaticResource Upper}}" FontFamily="{StaticResource HeaderFont}"
+                               FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+
+                    <!-- 3. řádek (aktivní): aktuální úkol – činnost a místo -->
+                    <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True"
+                               Visibility="{Binding IsActive, Converter={StaticResource BoolToVis}}">
+                        <TextBlock DockPanel.Dock="Left" Text="◆" Foreground="{StaticResource DiamondBrush}" Margin="0,0,7,0" VerticalAlignment="Center" />
+                        <Border DockPanel.Dock="Right" Style="{StaticResource Chip}" Margin="8,0,0,0"
+                                Visibility="{Binding HasProgress, Converter={StaticResource BoolToVis}}" ToolTip="{svc:Tr Active.ProgressHint}">
+                            <TextBlock Style="{StaticResource ChipText}">
+                                <Run Text="{Binding Progress, Mode=OneWay}" />
+                                <Run Text="{Binding MoreOpen, Mode=OneWay}" Foreground="{StaticResource DiamondBrush}" />
+                            </TextBlock>
+                        </Border>
+                        <TextBlock DockPanel.Dock="Right" Margin="10,0,0,0" VerticalAlignment="Center" MaxWidth="320" TextTrimming="CharacterEllipsis"
+                                   Visibility="{Binding HasCurrentLocation, Converter={StaticResource BoolToVis}}">
+                            <Run Text="⌖" Foreground="{StaticResource LinkBrush}" />
+                            <Run Text="{Binding CurrentLocation, Mode=OneWay}" Foreground="{StaticResource LinkBrush}" FontWeight="SemiBold" />
+                            <Run Text="{Binding CurrentDistance, Mode=OneWay}" Foreground="{StaticResource LabelBrush}" />
+                        </TextBlock>
+                        <TextBlock Text="{Binding CurrentText}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                   FontFamily="{StaticResource HeaderFont}" FontWeight="SemiBold" FontSize="13.5" />
+                    </DockPanel>
+
+                    <!-- 3. řádek (ukončený): stav · délka · aUEC/h -->
+                    <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontFamily="{StaticResource HeaderFont}"
+                               Visibility="{Binding IsFinished, Converter={StaticResource BoolToVis}}">
+                        <Run Text="{Binding StatusText, Mode=OneWay}" Foreground="{StaticResource ActiveBorderBrush}" FontWeight="SemiBold" />
+                        <Run Text="  ·  " Foreground="{StaticResource MutedBrush}" />
+                        <Run Text="{Binding Finished, Mode=OneWay}" Foreground="{StaticResource LabelBrush}" />
+                        <Run Text="  ·  " Foreground="{StaticResource MutedBrush}" />
+                        <Run Text="{Binding PerHour, Mode=OneWay}" FontWeight="SemiBold" />
+                        <Run Text="aUEC/h" Foreground="{StaticResource LabelBrush}" />
+                    </TextBlock>
+
+                    <!-- Tlačítka kontraktu -->
+                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="12,0,0,0"
+                                Visibility="{Binding IsActive, Converter={StaticResource BoolToVis}}">
+                        <Button Content="{svc:Tr Active.MarkFailed}" Style="{StaticResource DangerButton}" Padding="10,2" FontSize="11" Margin="0,0,6,0"
+                                Command="{Binding DataContext.MarkFailedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}" />
+                        <Button Content="{svc:Tr Active.MarkCompleted}" Style="{StaticResource AccentButton}" Padding="10,2" FontSize="11"
+                                Command="{Binding DataContext.MarkCompletedCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- ===== Celá karta kontraktu (po rozbalení; stejná v aktivních, historii i statistikách) ===== -->
+        <DataTemplate x:Key="ContractBody" DataType="{x:Type vm:ContractViewModel}">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="320" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- DETAILS | PRIMARY OBJECTIVES -->
+                    <Border Style="{StaticResource Card}" Padding="20,14">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Source={x:Static svc:Loc.Instance}, Path=[Active.Details], Converter={StaticResource Upper}}"
+                                           Style="{StaticResource SectionLabel}" />
+                                <TextBlock Text="{Binding Description}" Style="{StaticResource Body}"
+                                           Visibility="{Binding HasDescription, Converter={StaticResource BoolToVis}}" />
+                                <TextBlock Text="{svc:Tr Active.NoDetails}" Style="{StaticResource Muted}" FontStyle="Italic" TextWrapping="Wrap">
+                                    <TextBlock.Visibility>
+                                        <Binding Path="Description" Converter="{StaticResource EmptyToCollapsed}" ConverterParameter="invert" />
+                                    </TextBlock.Visibility>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="{Binding Source={x:Static svc:Loc.Instance}, Path=[Active.Objectives], Converter={StaticResource Upper}}"
+                                           Style="{StaticResource SectionLabel}" />
+                                <ItemsControl ItemsSource="{Binding Objectives}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type vm:ObjectiveItem}">
+                                            <Grid Margin="0,2,0,6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text" Value="◇" />
+                                                            <Setter Property="Foreground" Value="{StaticResource DiamondBrush}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                                                    <Setter Property="Text" Value="◆" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                                    <Setter Property="Text" Value="✔" />
+                                                                    <Setter Property="Foreground" Value="{StaticResource GoodBrush}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Cancelled}" Value="True">
+                                                                    <Setter Property="Text" Value="✖" />
+                                                                    <Setter Property="Foreground" Value="{StaticResource BadBrush}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap" FontFamily="{StaticResource HeaderFont}" FontWeight="SemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                                        <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Cancelled}" Value="True">
+                                                                        <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+                                                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding Location}" Foreground="{StaticResource LinkBrush}" FontSize="11.5" TextWrapping="Wrap"
+                                                               Visibility="{Binding HasLocation, Converter={StaticResource BoolToVis}}" />
+                                                    <TextBlock Text="{Binding TimeText}" Style="{StaticResource Muted}" FontSize="11"
+                                                               Visibility="{Binding HasTime, Converter={StaticResource BoolToVis}}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock Text="–" Style="{StaticResource Muted}"
+                                           Visibility="{Binding HasNoObjectives, Converter={StaticResource BoolToVis}}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Souhrn: odměna, zadavatel, typ, časy -->
+                    <Border Grid.Column="2" Style="{StaticResource Card}" Padding="18,12">
+                        <StackPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Col.Reward}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding RewardDisplay}" Style="{StaticResource FieldValue}" FontSize="15" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding HasFee, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{svc:Tr Col.Fee}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding FeeDisplay}" Style="{StaticResource FieldValue}" Foreground="{StaticResource BadBrush}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding HasFee, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{svc:Tr Col.Net}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding NetDisplay}" Style="{StaticResource FieldValue}" Foreground="{StaticResource GoodBrush}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Mode.Label}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding ModeText}" Style="{StaticResource FieldValue}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding HasLogFinished, Converter={StaticResource BoolToVis}}"
+                                       ToolTip="{svc:Tr Mode.LogEndNote}">
+                                <TextBlock Text="{svc:Tr Mode.LogEndLabel}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding LogFinishedText}" Style="{StaticResource FieldValue}" Foreground="{StaticResource DiamondBrush}" Margin="10,0,0,0" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Col.Type}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding TypeDisplay}" Style="{StaticResource FieldValue}" Margin="10,0,0,0" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Col.Giver}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding GiverName}" Style="{StaticResource FieldValue}" Margin="10,0,0,0" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding HasPerson, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{svc:Tr Col.Person}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding PersonDisplay}" Style="{StaticResource FieldValue}" Margin="10,0,0,0" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Col.Status}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding StatusText}" Style="{StaticResource FieldValue}" Foreground="{StaticResource ActiveBorderBrush}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Col.Accepted}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding Accepted}" Style="{StaticResource FieldValue}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding IsFinished, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{svc:Tr Col.Finished}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding Finished}" Style="{StaticResource FieldValue}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{Binding TimeLabel}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding ElapsedShort}" Style="{StaticResource FieldValue}" Foreground="{StaticResource ActiveBorderBrush}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2" Visibility="{Binding IsFinished, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="{svc:Tr Col.PerHour}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding PerHour}" Style="{StaticResource FieldValue}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{svc:Tr Rewards.Rep}" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="{Binding RepDisplay}" Style="{StaticResource FieldValue}" Foreground="{StaticResource LinkBrush}" />
+                            </DockPanel>
+                            <TextBlock Text="{svc:Tr Active.Stale}" Foreground="{StaticResource DiamondBrush}" FontSize="11.5" TextWrapping="Wrap" Margin="0,6,0,0"
+                                       Visibility="{Binding IsStale, Converter={StaticResource BoolToVis}}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Odměny a podrobnosti -->
+                <Border Style="{StaticResource Card}" Margin="0,10,0,0" Padding="20,14"
+                        Visibility="{Binding HasExtras, Converter={StaticResource BoolToVis}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Source={x:Static svc:Loc.Instance}, Path=[Rewards.Title], Converter={StaticResource Upper}}"
+                                   Style="{StaticResource SectionLabel}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <DockPanel Margin="0,2">
+                                    <TextBlock Text="{svc:Tr Rewards.Blueprint}" Style="{StaticResource FieldLabel}" Width="150" />
+                                    <TextBlock Text="{Binding BlueprintDisplay}" TextWrapping="Wrap" FontFamily="{StaticResource HeaderFont}" FontWeight="SemiBold">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasReceivedBlueprints}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource GoodBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DockPanel>
+                                <DockPanel Margin="0,2" Visibility="{Binding HasPotentialBlueprints, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Rewards.BpPotential}" Style="{StaticResource FieldLabel}" Width="150" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PotentialBlueprints}" TextWrapping="Wrap" Style="{StaticResource Body}" />
+                                </DockPanel>
+                                <DockPanel Margin="0,2" Visibility="{Binding HasItemRewards, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Rewards.Items}" Style="{StaticResource FieldLabel}" Width="150" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding ItemRewards}" TextWrapping="Wrap" Foreground="{StaticResource GoodBrush}" />
+                                </DockPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <DockPanel Margin="0,2" Visibility="{Binding HasGiver, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Info.Giver}" Style="{StaticResource FieldLabel}" Width="130" />
+                                    <TextBlock Text="{Binding GiverDisplay}" TextWrapping="Wrap" />
+                                </DockPanel>
+                                <DockPanel Margin="0,2" Visibility="{Binding HasMissionType, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Info.Type}" Style="{StaticResource FieldLabel}" Width="130" />
+                                    <TextBlock Text="{Binding MissionTypeDisplay}" />
+                                </DockPanel>
+                                <DockPanel Margin="0,2" Visibility="{Binding HasDifficulty, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Info.Difficulty}" Style="{StaticResource FieldLabel}" Width="130" VerticalAlignment="Top" />
+                                    <ItemsControl ItemsSource="{Binding Difficulty}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{StaticResource Card2Brush}" BorderBrush="{StaticResource BorderSoftBrush}"
+                                                        BorderThickness="1" CornerRadius="4" Padding="8,2" Margin="0,0,6,4">
+                                                    <TextBlock FontSize="12">
+                                                        <Run Text="{Binding Key, Mode=OneWay}" Foreground="{StaticResource LabelBrush}" />
+                                                        <Run Text="{Binding Value, Mode=OneWay}" FontWeight="SemiBold" />
+                                                    </TextBlock>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DockPanel>
+                                <DockPanel Margin="0,2" Visibility="{Binding HasOtherTags, Converter={StaticResource BoolToVis}}">
+                                    <TextBlock Text="{svc:Tr Info.Tags}" Style="{StaticResource FieldLabel}" Width="130" />
+                                    <TextBlock Text="{Binding OtherTags}" Foreground="{StaticResource LinkBrush}" />
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Nejbližší cíle (jen aktivní kontrakt) -->
+                <Border Style="{StaticResource Card}" Margin="0,10,0,0" Padding="20,14"
+                        Visibility="{Binding IsActive, Converter={StaticResource BoolToVis}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Source={x:Static svc:Loc.Instance}, Path=[Active.Nearest], Converter={StaticResource Upper}}"
+                                   Style="{StaticResource SectionLabel}" />
+                        <TextBlock Text="{svc:Tr Active.NoLocations}" Style="{StaticResource Muted}" TextWrapping="Wrap" FontStyle="Italic"
+                                   Visibility="{Binding HasNoNearest, Converter={StaticResource BoolToVis}}" />
+                        <ItemsControl ItemsSource="{Binding Nearest}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:NavTargetViewModel}">
+                                    <Border Background="{StaticResource Card2Brush}" CornerRadius="4" Padding="12,6" Margin="0,0,0,4">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="230" />
+                                                <ColumnDefinition Width="110" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}" Foreground="{StaticResource LinkBrush}" FontFamily="{StaticResource HeaderFont}"
+                                                           FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                                                <TextBlock Text="{Binding SystemName}" Style="{StaticResource Muted}" FontSize="11" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding Distance}" VerticalAlignment="Center"
+                                                       FontFamily="{StaticResource HeaderFont}" Foreground="{StaticResource LabelBrush}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Task}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Kompaktní karta + celá karta po rozbalení -->
+        <DataTemplate x:Key="ContractExpandable" DataType="{x:Type vm:ContractViewModel}">
+            <StackPanel Margin="0,0,6,8">
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ContractCompact}" Focusable="False" />
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,0,0,0" Margin="12,8,0,6" Padding="12,0,0,0"
+                        Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}">
+                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ContractBody}" Focusable="False" />
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Rozbalovací šipka v prvním sloupci DataGridu -->
+        <DataTemplate x:Key="RowToggleCell">
+            <ToggleButton Style="{StaticResource ExpandToggle}" Width="22" Height="22"
+                          IsChecked="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged}" />
+        </DataTemplate>
+
+        <!-- Hlavička skupiny v historii: název + souhrn, sbalitelná -->
+        <Style x:Key="HistoryGroupItem" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <StackPanel Margin="0,6,0,2">
+                            <Border Background="#16303F" BorderBrush="#2F6283" BorderThickness="1" CornerRadius="5" Padding="8,5">
+                                <DockPanel>
+                                    <ToggleButton x:Name="GroupToggle" Style="{StaticResource ExpandToggle}" IsChecked="True" Margin="0,0,10,0" />
+                                    <TextBlock Text="{Binding Name, Converter={StaticResource Upper}}" FontFamily="{StaticResource HeaderFont}"
+                                               FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    <TextBlock Margin="16,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource LabelBrush}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource GroupSummary}">
+                                                <Binding Path="Items" />
+                                                <Binding Path="ItemCount" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DockPanel>
+                            </Border>
+                            <ItemsPresenter x:Name="GroupItems" Margin="0,2,0,0" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="GroupToggle" Property="IsChecked" Value="False">
+                                <Setter TargetName="GroupItems" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- ===== Systémová nabídka ===== -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{svc:Tr Menu.File}">
+                <MenuItem Header="{svc:Tr Menu.ImportHistory}" Command="{Binding ImportHistoryCommand}" />
+                <MenuItem Header="{svc:Tr Menu.OpenDataFolder}" Command="{Binding OpenDataFolderCommand}" />
+                <Separator />
+                <MenuItem Header="{svc:Tr Menu.Exit}" Command="{Binding ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="{svc:Tr Menu.Settings}">
+                <MenuItem Header="{svc:Tr Menu.Preferences}" Command="{Binding OpenSettingsCommand}" />
+                <MenuItem Header="{svc:Tr Menu.InstallOcr}" Command="{Binding InstallOcrCommand}" />
+                <Separator />
+                <MenuItem Header="{svc:Tr Menu.AppLanguage}" ItemsSource="{Binding AppLanguages}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Setter Property="Header" Value="{Binding Name}" />
+                            <Setter Property="IsCheckable" Value="True" />
+                            <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=OneWay}" />
+                            <EventSetter Event="Click" Handler="AppLanguage_Click" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+                <MenuItem Header="{svc:Tr Menu.GameLanguage}" ItemsSource="{Binding GameLanguages}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Setter Property="Header" Value="{Binding Name}" />
+                            <Setter Property="IsCheckable" Value="True" />
+                            <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=OneWay}" />
+                            <EventSetter Event="Click" Handler="GameLanguage_Click" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{svc:Tr Menu.AlwaysOnTop}" IsCheckable="True" IsChecked="{Binding AlwaysOnTop}" />
+            </MenuItem>
+            <MenuItem Header="{svc:Tr Menu.Help}">
+                <MenuItem Header="{svc:Tr Menu.ReadMobiGlasNow}" Command="{Binding ReadMobiGlasNowCommand}" />
+                <MenuItem Header="{svc:Tr Menu.SaveOcrDiagnostics}" Command="{Binding SaveOcrDiagnosticsCommand}" />
+                <Separator />
+                <MenuItem Header="{svc:Tr Menu.CheckUpdates}" Command="{Binding CheckUpdatesCommand}" />
+                <Separator />
+                <MenuItem Header="{svc:Tr Menu.About}" Command="{Binding AboutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <!-- ===== Stavový řádek ===== -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem Content="{Binding LogStatus}" />
+            <Separator Style="{StaticResource BarSeparator}" />
+            <StatusBarItem Content="{Binding MobiStatus}" />
+            <Separator Style="{StaticResource BarSeparator}" />
+            <StatusBarItem Content="{Binding LocationStatus}" />
+            <Separator Style="{StaticResource BarSeparator}" />
+            <StatusBarItem Content="{Binding GameDataStatus}" />
+            <StatusBarItem HorizontalAlignment="Right" Content="{Binding UpdateStatus}" />
+        </StatusBar>
+
+        <TabControl Margin="16,6,16,10">
+            <!-- ===== Aktivní kontrakty ===== -->
+            <TabItem Header="{svc:Tr Tab.Active}">
+                <Border Style="{StaticResource Panel}" Margin="0,10,0,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,6,10" LastChildFill="False">
+                            <Button Content="{svc:Tr Active.New}" Style="{StaticResource AccentButton}" Padding="10,3" FontSize="11" Margin="0,0,14,0"
+                                    Command="{Binding NewContractCommand}" />
+                            <!-- Výchozí režim dokončení pro nově založené kontrakty -->
+                            <TextBlock Text="{svc:Tr Mode.Default}" Style="{StaticResource FieldLabel}" Margin="0,0,6,0" />
+                            <ToggleButton Style="{StaticResource ModeToggle}" IsChecked="{Binding DefaultManualMode}" ToolTip="{svc:Tr Mode.Hint}" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.CollapseAll}" Padding="10,3" FontSize="11"
+                                    Command="{Binding CollapseAllCommand}" CommandParameter="active" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.ExpandAll}" Padding="10,3" FontSize="11" Margin="0,0,14,0"
+                                    Command="{Binding ExpandAllCommand}" CommandParameter="active" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.CompleteAll}" Style="{StaticResource AccentButton}" Padding="10,3" FontSize="11" Margin="0,0,6,0"
+                                    Command="{Binding CompleteAllCommand}" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.AbandonAll}" Style="{StaticResource DangerButton}" Padding="10,3" FontSize="11" Margin="0,0,6,0"
+                                    Command="{Binding AbandonAllCommand}" />
+                        </DockPanel>
+                        <Grid>
+                            <TextBlock Text="{svc:Tr Active.Empty}" Style="{StaticResource Muted}" TextWrapping="Wrap"
+                                       Margin="8,20" FontSize="14"
+                                       Visibility="{Binding HasNoActive, Converter={StaticResource BoolToVis}}" />
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding ActiveContracts}" ItemTemplate="{StaticResource ContractExpandable}" />
+                            </ScrollViewer>
+                        </Grid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
+
+            <!-- ===== Historie ===== -->
+            <TabItem Header="{svc:Tr Tab.History}">
+                <Border Style="{StaticResource Panel}" Margin="0,10,0,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10" LastChildFill="False">
+                            <TextBlock Text="{svc:Tr Stats.Period}" Style="{StaticResource FieldLabel}" Margin="0,0,8,0" />
+                            <ComboBox Width="170" SelectedIndex="{Binding PeriodIndex}">
+                                <ComboBoxItem Content="{svc:Tr Stats.Today}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.Week}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.Month}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.All}" />
+                            </ComboBox>
+                            <TextBlock Text="{svc:Tr Group.By}" Style="{StaticResource FieldLabel}" Margin="20,0,8,0" />
+                            <ComboBox Width="190" SelectedIndex="{Binding HistoryGroupingIndex}">
+                                <ComboBoxItem Content="{svc:Tr Group.None}" />
+                                <ComboBoxItem Content="{svc:Tr Group.Type}" />
+                                <ComboBoxItem Content="{svc:Tr Group.Giver}" />
+                                <ComboBoxItem Content="{svc:Tr Group.Title}" />
+                            </ComboBox>
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr History.DeleteAll}" Style="{StaticResource DangerButton}" Padding="10,3" FontSize="11" Margin="14,0,0,0"
+                                    Command="{Binding DeleteAllHistoryCommand}" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.CollapseAll}" Padding="10,3" FontSize="11"
+                                    Command="{Binding CollapseAllCommand}" CommandParameter="history" />
+                            <Button DockPanel.Dock="Right" Content="{svc:Tr Active.ExpandAll}" Padding="10,3" FontSize="11" Margin="0,0,6,0"
+                                    Command="{Binding ExpandAllCommand}" CommandParameter="history" />
+                        </DockPanel>
+
+                        <!-- Detaily řádků jsou vždy „viditelné“, obsah se skrývá podle IsExpanded
+                             (styl DetailsVisibility DataGrid přebíjí a detail se neotevřel) -->
+                        <DataGrid ItemsSource="{Binding HistoryView}" svc:DataGridColumnChooser.GridKey="history" RowStyle="{StaticResource StatusRow}"
+                                  RowDetailsVisibilityMode="Visible"
+                                  VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <DataGrid.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource HistoryGroupItem}" />
+                            </DataGrid.GroupStyle>
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2,0,0,0" Margin="18,6,10,12" Padding="12,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource Subtract}, ConverterParameter=60}"
+                                            Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}">
+                                        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ContractBody}" Focusable="False" />
+                                    </Border>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
+                            <DataGrid.Columns>
+                                <!-- Pravé tlačítko na hlavičce = zobrazit/skrýt sloupce (DataGridColumnChooser) -->
+                                <DataGridTemplateColumn Width="40" CellTemplate="{StaticResource RowToggleCell}" CanUserSort="False" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="type" Header="{svc:Tr Col.Type}" Binding="{Binding CategoryName, Mode=OneWay}" Width="110" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="giver" Header="{svc:Tr Col.Giver}" Binding="{Binding GiverName, Mode=OneWay}" Width="150" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="title" Header="{svc:Tr Col.Name}" Binding="{Binding Title, Mode=OneWay}" Width="300" MinWidth="120" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="person" Header="{svc:Tr Col.Person}" Binding="{Binding PersonDisplay, Mode=OneWay}" Width="150" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="status" Header="{svc:Tr Col.Status}" Binding="{Binding StatusText, Mode=OneWay}" Width="110" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="accepted" Header="{svc:Tr Col.Accepted}" Binding="{Binding Accepted, Mode=OneWay}" Width="125" IsReadOnly="True"
+                                                    SortMemberPath="AcceptedAtValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="finished" Header="{svc:Tr Col.Finished}" Binding="{Binding Finished, Mode=OneWay}" Width="125" IsReadOnly="True"
+                                                    SortMemberPath="FinishedAtValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="duration" Header="{svc:Tr Col.Duration}" Binding="{Binding Duration, Mode=OneWay}" Width="80" IsReadOnly="True"
+                                                    SortMemberPath="SortDuration" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="reward" Header="{svc:Tr Col.Reward}" Width="110"
+                                                    Binding="{Binding Reward, TargetNullValue='', UpdateSourceTrigger=LostFocus}" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="fee" Header="{svc:Tr Col.Fee}" Width="95"
+                                                    Binding="{Binding Fee, TargetNullValue='', UpdateSourceTrigger=LostFocus}" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="net" Header="{svc:Tr Col.Net}" Binding="{Binding NetDisplay, Mode=OneWay}" Width="110" IsReadOnly="True"
+                                                    SortMemberPath="SortNet" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="mode" Header="{svc:Tr Mode.Label}" Binding="{Binding ModeText, Mode=OneWay}" Width="80" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="perhour" Header="{svc:Tr Col.PerHour}" Binding="{Binding PerHour, Mode=OneWay}" Width="95" IsReadOnly="True"
+                                                    SortMemberPath="SortPerHour" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="rep" Header="{svc:Tr Col.Rep}" Binding="{Binding RepDisplay, Mode=OneWay}" Width="100" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="bpoffer" Header="{svc:Tr Col.BpOffer}" Binding="{Binding BlueprintOfferDisplay, Mode=OneWay}" Width="150" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="bpreceived" Header="{svc:Tr Col.BpReceived}" Binding="{Binding ReceivedBlueprintsText, Mode=OneWay}" Width="180" IsReadOnly="True" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="items" Header="{svc:Tr Rewards.Items}" Binding="{Binding ItemRewards, Mode=OneWay}" Width="160" IsReadOnly="True" />
+                                <DataGridTemplateColumn Width="44" CanUserSort="False" CanUserResize="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="✎" Padding="8,1" FontSize="12" ToolTip="{svc:Tr Edit.Title}" HorizontalAlignment="Center"
+                                                    Command="{Binding DataContext.EditContractCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="44" CanUserSort="False" CanUserResize="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="✕" Padding="8,1" FontSize="12" Style="{StaticResource DangerButton}" ToolTip="{svc:Tr History.Delete}" HorizontalAlignment="Center"
+                                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
+
+            <!-- ===== Statistiky ===== -->
+            <TabItem Header="{svc:Tr Tab.Stats}">
+                <Border Style="{StaticResource Panel}" Margin="0,10,0,0">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="{svc:Tr Stats.Period}" Style="{StaticResource FieldLabel}" Margin="0,0,8,0" />
+                            <ComboBox Width="170" SelectedIndex="{Binding PeriodIndex}">
+                                <ComboBoxItem Content="{svc:Tr Stats.Today}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.Week}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.Month}" />
+                                <ComboBoxItem Content="{svc:Tr Stats.All}" />
+                            </ComboBox>
+                            <TextBlock Text="{svc:Tr Group.By}" Style="{StaticResource FieldLabel}" Margin="20,0,8,0" />
+                            <ComboBox Width="190" SelectedIndex="{Binding StatsGroupingIndex}">
+                                <ComboBoxItem Content="{svc:Tr Group.Type}" />
+                                <ComboBoxItem Content="{svc:Tr Group.Giver}" />
+                                <ComboBoxItem Content="{svc:Tr Group.Title}" />
+                            </ComboBox>
+                        </StackPanel>
+
+                        <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding OverallTiles}" Margin="0,0,0,6">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="5" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:StatTile}">
+                                    <Border Style="{StaticResource Card}" Margin="0,0,8,8" Padding="12,8">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Label}" Style="{StaticResource FieldLabel}" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{Binding Value}" FontFamily="{StaticResource HeaderFont}" FontSize="18" FontWeight="SemiBold"
+                                                       Margin="0,4,0,0" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{Binding Sub}" Style="{StaticResource Muted}" FontSize="11" TextTrimming="CharacterEllipsis"
+                                                       ToolTip="{Binding Sub}" Visibility="{Binding HasSub, Converter={StaticResource BoolToVis}}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource SectionLabel}" Margin="0,8,0,6"
+                                   Text="{Binding Source={x:Static svc:Loc.Instance}, Path=[Stats.Groups], Converter={StaticResource Upper}}" />
+                        <DataGrid ItemsSource="{Binding GroupStats}" IsReadOnly="True" svc:DataGridColumnChooser.GridKey="stats"
+                                  RowDetailsVisibilityMode="Visible" VirtualizingPanel.ScrollUnit="Pixel">
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate DataType="{x:Type vm:GroupStatsRow}">
+                                    <StackPanel Margin="18,6,10,12" HorizontalAlignment="Left"
+                                                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource Subtract}, ConverterParameter=60}"
+                                                Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}">
+                                        <!-- Další statistické ukazatele skupiny -->
+                                        <Border Style="{StaticResource Card}" Padding="14,8" Margin="0,0,0,8">
+                                            <WrapPanel>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.RewardRange}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding RewardRange, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.MedianDuration}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding MedianDuration, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.Fastest}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding Fastest, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.Slowest}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding Slowest, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.TotalTime}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding TotalDuration, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.Active}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding Active, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Col.Rep}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding Rep, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Col.Blueprints}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding Blueprints, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                                <TextBlock Margin="0,2,22,2"><Run Text="{svc:Tr Stats.LastAccepted}" Foreground="{StaticResource LabelBrush}" /> <Run Text="{Binding LastAccepted, Mode=OneWay}" FontWeight="SemiBold" /></TextBlock>
+                                            </WrapPanel>
+                                        </Border>
+                                        <!-- Kontrakty ve skupině – každý jde rozbalit na celou kartu -->
+                                        <ItemsControl ItemsSource="{Binding Contracts}" ItemTemplate="{StaticResource ContractExpandable}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="40" CellTemplate="{StaticResource RowToggleCell}" CanUserSort="False" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="group" Header="{Binding Data.StatsGroupHeader, Source={StaticResource VmProxy}}"
+                                                    Binding="{Binding Name, Mode=OneWay}" Width="260" MinWidth="120" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="count" Header="{svc:Tr Col.Count}" Binding="{Binding Accepted, Mode=OneWay}" Width="70" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="active" Header="{svc:Tr Stats.ActiveCol}" Binding="{Binding Active, Mode=OneWay}" Width="70" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="completed" Header="{svc:Tr Col.Completed}" Binding="{Binding Completed, Mode=OneWay}" Width="80" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="failed" Header="{svc:Tr Col.Failed}" Binding="{Binding Failed, Mode=OneWay}" Width="75" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="success" Header="{svc:Tr Col.Success}" Binding="{Binding SuccessRate, Mode=OneWay}" Width="80" SortMemberPath="SortSuccessRate" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="total" Header="{svc:Tr Col.TotalReward}" Binding="{Binding TotalReward, Mode=OneWay}" Width="110" SortMemberPath="SortTotalReward" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="avg" Header="{svc:Tr Col.AvgReward}" Binding="{Binding AverageReward, Mode=OneWay}" Width="100" SortMemberPath="SortAverageReward" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="median" Header="{svc:Tr Col.Median}" Binding="{Binding MedianReward, Mode=OneWay}" Width="95" SortMemberPath="SortMedianReward" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="range" Header="{svc:Tr Col.RewardRange}" Binding="{Binding RewardRange, Mode=OneWay}" Width="150" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="avgdur" Header="{svc:Tr Col.AvgDuration}" Binding="{Binding AverageDuration, Mode=OneWay}" Width="90" SortMemberPath="SortAverageDuration" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="meddur" Header="{svc:Tr Col.MedianDuration}" Binding="{Binding MedianDuration, Mode=OneWay}" Width="90" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="fastest" Header="{svc:Tr Col.Fastest}" Binding="{Binding Fastest, Mode=OneWay}" Width="90" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="slowest" Header="{svc:Tr Col.Slowest}" Binding="{Binding Slowest, Mode=OneWay}" Width="90" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="totaltime" Header="{svc:Tr Col.TotalTime}" Binding="{Binding TotalDuration, Mode=OneWay}" Width="90" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="perhour" Header="{svc:Tr Col.PerHour}" Binding="{Binding PerHour, Mode=OneWay}" Width="95" SortMemberPath="SortPerHour" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="best" Header="{svc:Tr Col.BestPerHour}" Binding="{Binding BestPerHour, Mode=OneWay}" Width="105" SortMemberPath="SortBestPerHour" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="fees" Header="{svc:Tr Col.Fees}" Binding="{Binding Fees, Mode=OneWay}" Width="100" SortMemberPath="SortFees" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="rep" Header="{svc:Tr Col.Rep}" Binding="{Binding Rep, Mode=OneWay}" Width="90" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="bpcount" Header="{svc:Tr Col.BpCount}" Binding="{Binding Blueprints, Mode=OneWay}" Width="70" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="bpreceived" Header="{svc:Tr Col.BpReceived}" Binding="{Binding BlueprintNames, Mode=OneWay}" Width="200" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="last" Header="{svc:Tr Col.LastAccepted}" Binding="{Binding LastAccepted, Mode=OneWay}" Width="110" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
+
+            <!-- ===== Blueprinty ===== -->
+            <TabItem Header="{svc:Tr Tab.Blueprints}">
+                <Border Style="{StaticResource Panel}" Margin="0,10,0,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10" LastChildFill="False">
+                            <TextBlock Text="{svc:Tr Rewards.Search}" Style="{StaticResource FieldLabel}" Margin="0,0,8,0" />
+                            <TextBox Width="260" Text="{Binding RewardFilter, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding BlueprintSummary}" Style="{StaticResource FieldLabel}" />
+                        </DockPanel>
+                        <TextBlock DockPanel.Dock="Bottom" Text="{svc:Tr Rewards.ImportHint}" Style="{StaticResource Muted}" FontSize="11" Margin="2,8,0,0" TextWrapping="Wrap" />
+                        <DataGrid ItemsSource="{Binding BlueprintRows}" IsReadOnly="True" svc:DataGridColumnChooser.GridKey="blueprints">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="name" Header="{svc:Tr Col.Blueprint}" Binding="{Binding Name, Mode=OneWay}" Width="260" MinWidth="120" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="count" Header="{svc:Tr Col.Times}" Binding="{Binding Count, Mode=OneWay}" Width="70" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="last" Header="{svc:Tr Col.LastReceived}" Binding="{Binding LastReceived, Mode=OneWay}" Width="130" SortMemberPath="LastValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="first" Header="{svc:Tr Col.FirstReceived}" Binding="{Binding FirstReceived, Mode=OneWay}" Width="130" SortMemberPath="FirstValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="contracts" Header="{svc:Tr Col.FromContracts}" Binding="{Binding Contracts, Mode=OneWay}" Width="300" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="types" Header="{svc:Tr Col.Type}" Binding="{Binding Types, Mode=OneWay}" Width="130" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="givers" Header="{svc:Tr Col.Giver}" Binding="{Binding Givers, Mode=OneWay}" Width="180" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
+            <!-- ===== Předměty ===== -->
+            <TabItem Header="{svc:Tr Tab.Items}">
+                <Border Style="{StaticResource Panel}" Margin="0,10,0,0">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10" LastChildFill="False">
+                            <TextBlock Text="{svc:Tr Rewards.Search}" Style="{StaticResource FieldLabel}" Margin="0,0,8,0" />
+                            <TextBox Width="260" Text="{Binding RewardFilter, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding ItemSummary}" Style="{StaticResource FieldLabel}" />
+                        </DockPanel>
+                        <TextBlock DockPanel.Dock="Bottom" Text="{svc:Tr Rewards.ImportHint}" Style="{StaticResource Muted}" FontSize="11" Margin="2,8,0,0" TextWrapping="Wrap" />
+                        <DataGrid ItemsSource="{Binding ItemRows}" IsReadOnly="True" svc:DataGridColumnChooser.GridKey="items">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="name" Header="{svc:Tr Col.Item}" Binding="{Binding Name, Mode=OneWay}" Width="260" MinWidth="120" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="count" Header="{svc:Tr Col.Times}" Binding="{Binding Count, Mode=OneWay}" Width="70" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="last" Header="{svc:Tr Col.LastReceived}" Binding="{Binding LastReceived, Mode=OneWay}" Width="130" SortMemberPath="LastValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="first" Header="{svc:Tr Col.FirstReceived}" Binding="{Binding FirstReceived, Mode=OneWay}" Width="130" SortMemberPath="FirstValue" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="contracts" Header="{svc:Tr Col.FromContracts}" Binding="{Binding Contracts, Mode=OneWay}" Width="300" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="types" Header="{svc:Tr Col.Type}" Binding="{Binding Types, Mode=OneWay}" Width="130" />
+                                <DataGridTextColumn svc:DataGridColumnChooser.Key="givers" Header="{svc:Tr Col.Giver}" Binding="{Binding Givers, Mode=OneWay}" Width="180" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

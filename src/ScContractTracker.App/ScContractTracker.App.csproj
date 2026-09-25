@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- Projekce Windows SDK 22621 (WGC bez rámečku na Win11); běží od Windows 10 2004 (19041) -->
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>ScContractTracker</AssemblyName>
+    <RootNamespace>ScContractTracker.App</RootNamespace>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>ScContractTracker.App.Program</StartupObject>
+    <!-- Umožní build i na Linuxu/macOS v CI (spuštění jen na Windows) -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- Při spuštění přes dotnet run poběží i na novějším runtime (.NET 9/10), když .NET 8 chybí -->
+    <RollForward>Major</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="RepositoryUrl" Value="$(RepositoryUrl)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Velopack" Version="1.2.158" />
+    <PackageReference Include="ZstdSharp.Port" Version="0.8.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScContractTracker.Core\ScContractTracker.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\app.ico" />
+    <None Update="Assets\locations.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Assets\Languages\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
