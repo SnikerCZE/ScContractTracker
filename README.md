@@ -1,71 +1,72 @@
 # SC Contract Tracker
 
-Desktopová aplikace pro Windows, která ve hře **Star Citizen** sleduje tvoje přijaté kontrakty,
-měří, jak dlouho ti trvají, a počítá **výdělek v aUEC za hodinu**.
+**English** · [Čeština](README.cs.md)
 
-*A Windows companion app for Star Citizen that tracks your accepted contracts, their duration,
-rewards and aUEC per hour. Interface in English, Czech and German.*
+A Windows desktop app for **Star Citizen** that tracks your accepted contracts,
+measures how long they take and calculates your **earnings in aUEC per hour**.
 
-> Neoficiální fanouškovský nástroj bez vazby na Cloud Imperium Games.
-> Aplikace nic nemění ve hře, nečte její paměť a nic do hry neposílá.
+> Unofficial fan-made tool, not affiliated with Cloud Imperium Games.
+> The app does not modify the game, does not read its memory and sends nothing to the game.
 
-## Co umí
+## Features
 
-- **Automaticky zachytí kontrakty** – přijetí, dokončení, selhání, opuštění i ukončení při odhlášení, s přesným časem.
-- **Přehled aktivních kontraktů** – kompaktní karty s typem kontraktu, zadavatelem, odměnou, časem přijetí
-  a **aktuálním úkolem** (co a kde udělat). Po splnění úkolu se hned ukáže další. Kartu jde rozbalit na všechny detaily.
-- **Odměna, zadavatel, popis a úkoly** se načtou z mobiGlasu, když otevřeš *Contracts › Accepted*.
-- **Poplatek za přijetí** a **čistý výdělek** (odměna − poplatek).
-- **3 nejbližší místa** ke každému kontraktu a co tam udělat.
-- **Historie** – barevně podle výsledku, seskupení podle typu / zadavatele / názvu, rozbalení na celou kartu,
-  úpravy, mazání, filtr období.
-- **Statistiky** – počet kontraktů, úspěšnost, výdělek, průměr a medián odměny, doby, **aUEC/h** a nejlepší kontrakty,
-  celkem i po skupinách.
-- **Blueprinty a předměty** – přehled všeho, co jsi za kontrakty získal, s hledáním.
-- **Ruční zadání a úprava** kontraktu, včetně všech údajů.
-- **Režim dokončení AUTO / MANU** – kontrakt se ukončí sám podle hry, nebo až tlačítkem v aplikaci.
-- **Import starší historie** z předchozích herních sezení.
-- **Tabulky podle sebe** – zobrazení/skrytí sloupců, šířka a pořadí (pravé tlačítko na hlavičce).
-- **Automatické aktualizace** – nová verze se stáhne sama.
+- **Automatic contract tracking** – accepted, completed, failed, abandoned and ended on logout, with exact times.
+- **Active contracts overview** – compact cards with contract type, contractor, reward, time accepted
+  and the **current objective** (what to do and where). Once an objective is done, the next one shows up right away.
+  Expand a card to see all details.
+- **Reward, contractor, description and objectives** are read from the mobiGlas when you open *Contracts › Accepted*.
+- **Acceptance fee** and **net earnings** (reward − fee).
+- **3 nearest locations** for each contract and what to do there.
+- **History** – colour-coded by outcome, grouped by type / contractor / title, expandable to the full card,
+  editing, deleting, time period filter.
+- **Statistics** – number of contracts, success rate, earnings, average and median reward, durations, **aUEC/h**
+  and best contracts, overall and per group.
+- **Blueprints and items** – everything you have earned from contracts, with search.
+- **Manual entry and editing** of a contract, including all details.
+- **AUTO / MANUAL completion mode** – a contract ends on its own based on the game, or only when you press a button in the app.
+- **Import of older history** from previous game sessions.
+- **Customisable tables** – show/hide columns, width and order (right-click the header).
+- **Automatic updates** – new versions download by themselves.
 
-## Instalace
+## Installation
 
-1. Stáhni **`ScContractTracker-win-Setup.exe`** z [Releases](../../releases) a spusť ho.
-   Instalace nepotřebuje práva administrátora.
-2. Při prvním spuštění zkontroluj v *Nastavení › Předvolby* cestu ke hře
-   (výchozí `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE`) a jazyk hry.
-3. Hraj. Aplikaci můžeš mít otevřenou vedle hry nebo na druhém monitoru.
+1. Download **`ScContractTracker-win-Setup.exe`** from [Releases](../../releases) and run it.
+   No administrator rights are needed.
+   A shortcut is created in the Start menu; on first launch the app asks whether you also want a desktop shortcut.
+2. On first launch, check the game path in *Settings › Preferences*
+   (default `C:\Program Files\Roberts Space Industries\StarCitizen\LIVE`) and the game language.
+3. Play. You can keep the app open next to the game or on a second monitor.
 
-**Požadavky:** Windows 10 (verze 2004 a novější) nebo Windows 11.
+**Requirements:** Windows 10 (version 2004 or newer) or Windows 11.
 
-## Tipy pro používání
+## Tips
 
-- **Odměna a popis kontraktu:** po přijetí kontraktu otevři v mobiGlasu *Contracts › Accepted* a klikni na kontrakt.
-  Aplikace si údaje přečte sama. Ručně to spustíš přes *Nápověda › Přečíst mobiGlas*.
-- **Režim zobrazení hry:** funguje okno, Borderless i Fullscreen. Kdyby aplikace ve stavovém řádku hlásila černý obraz,
-  stiskni ve hře na záložce Accepted **PrtScn** – aplikace si snímek obrazovky přečte.
-- **Rozpoznávání textu:** aplikace používá rozpoznávání textu z Windows. Pokud chybí pro jazyk hry, aplikace ho
-  doinstaluje sama (Windows se jednou zeptá na potvrzení). Později ho spustíš z *Nastavení › Nainstalovat OCR pro jazyk hry*.
-- **Poloha pro nejbližší místa:** napiš do chatu ve hře `/showlocation` – aplikace souřadnice převezme ze schránky.
-- **Starší kontrakty:** *Soubor › Import historie z logbackups…* načte kontrakty, blueprinty a předměty z předchozích sezení.
-- **Pád hry:** přijaté kontrakty zůstávají aktivní (stejně jako ve hře). Odhlášení nebo ukončení hry přes menu je ukončí.
-- **Když aplikace čte špatné hodnoty:** *Nápověda › Uložit diagnostiku OCR* a pošli uložené soubory v [Issues](../../issues).
+- **Contract reward and description:** after accepting a contract, open *Contracts › Accepted* in the mobiGlas and click the contract.
+  The app reads the details on its own. You can also trigger it manually via *Help › Read mobiGlas now*.
+- **Game display mode:** Windowed, Borderless and Fullscreen all work. If the status bar reports a black image,
+  press **PrtScn** in the game on the Accepted tab – the app will read the screenshot.
+- **Text recognition:** the app uses Windows text recognition (OCR). If it is missing for your game language, the app
+  installs it by itself (Windows asks for confirmation once). You can run it later from *Settings › Install OCR for game language*.
+- **Location for nearest places:** type `/showlocation` in the in-game chat – the app picks up the coordinates from the clipboard.
+- **Older contracts:** *File › Import history from logbackups…* loads contracts, blueprints and items from previous sessions.
+- **Game crash:** accepted contracts stay active (just like in the game). Logging out or quitting the game via the menu ends them.
+- **If the app reads wrong values:** use *Help › Save OCR diagnostics* and send the saved files in [Issues](../../issues).
 
-## Jazyky
+## Languages
 
-V *Nastavení* nastavíš zvlášť **jazyk aplikace** a **jazyk hry** (podle jazyka, ve kterém hraješ).
-Vestavěná je angličtina, čeština a němčina.
+In *Settings* you set the **app language** and the **game language** (the language you play in) separately.
+English, Czech and German are built in.
 
-## Data a soukromí
+## Data and privacy
 
-Vše zůstává jen na tvém počítači ve složce `%AppData%\ScContractTracker` (historie, nastavení).
-Aplikace nic neodesílá; připojuje se jen ke GitHubu kvůli kontrole nových verzí (lze vypnout v nastavení).
+Everything stays on your computer in `%AppData%\ScContractTracker` (history, settings).
+The app sends nothing; it only connects to GitHub to check for new versions (can be turned off in settings).
 
-## Chyby a nápady
+## Bugs and ideas
 
-Nahlas je v sekci [Issues](../../issues).
+Report them in [Issues](../../issues).
 
-## Licence
+## License
 
 MIT © 2026 Jiří Libich.
-Star Citizen® je ochranná známka Cloud Imperium Rights LLC. Tento projekt není spojen s Cloud Imperium Games.
+Star Citizen® is a trademark of Cloud Imperium Rights LLC. This project is not affiliated with Cloud Imperium Games.
