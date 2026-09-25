@@ -62,6 +62,10 @@ English, Czech and German are built in.
 Everything stays on your computer in `%AppData%\ScContractTracker` (history, settings).
 The app sends nothing; it only connects to GitHub to check for new versions (can be turned off in settings).
 
+## Support
+
+The app is free and always will be. If it helps you, you can voluntarily support its development on [Ko-fi](https://ko-fi.com/snikercze) – it does not unlock anything.
+
 ## Bugs and ideas
 
 Report them in [Issues](../../issues).

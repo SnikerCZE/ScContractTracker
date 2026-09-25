@@ -61,6 +61,10 @@ Vestavěná je angličtina, čeština a němčina.
 Vše zůstává jen na tvém počítači ve složce `%AppData%\ScContractTracker` (historie, nastavení).
 Aplikace nic neodesílá; připojuje se jen ke GitHubu kvůli kontrole nových verzí (lze vypnout v nastavení).
 
+## Podpora
+
+Aplikace je a zůstane zdarma. Pokud ti pomáhá, můžeš její vývoj dobrovolně podpořit na [Ko-fi](https://ko-fi.com/snikercze) – nic se tím neodemyká.
+
 ## Chyby a nápady
 
 Nahlas je v sekci [Issues](../../issues).

@@ -249,5 +249,7 @@
   "Confirm.DeleteAll": "Delete all {0} contracts shown in history (current period filter)? This cannot be undone.",
   "Mode.LogEndLabel": "End in log",
   "Mode.LogEndNote": "For information only – profit per hour uses the time from acceptance to manual completion.",
-  "Install.DesktopShortcutPrompt": "Create a SC Contract Tracker shortcut on the desktop?\n\nThe app is also available in the Start menu."
+  "Install.DesktopShortcutPrompt": "Create a SC Contract Tracker shortcut on the desktop?\n\nThe app is also available in the Start menu.",
+  "About.Support": "Support development",
+  "About.SupportNote": "The app is free. If it helps you, you can voluntarily support its development – it does not unlock anything."
 }

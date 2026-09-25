@@ -7,6 +7,8 @@ namespace ScContractTracker.App.Views;
 
 public partial class AboutWindow : Window
 {
+    public const string SupportUrl = "https://ko-fi.com/snikercze";
+
     public AboutWindow()
     {
         InitializeComponent();
@@ -14,11 +16,16 @@ public partial class AboutWindow : Window
         VersionText.Text = Loc.Instance.Format("About.Version", UpdateService.CurrentVersion);
         RepoLink.Content = UpdateService.RepositoryUrl;
         DataLink.Content = AppPaths.DataDir;
+        SupportLink.Content = SupportUrl;
     }
 
-    private void Repo_Click(object sender, RoutedEventArgs e)
+    private void Repo_Click(object sender, RoutedEventArgs e) => OpenUrl(UpdateService.RepositoryUrl);
+
+    private void Support_Click(object sender, RoutedEventArgs e) => OpenUrl(SupportUrl);
+
+    private static void OpenUrl(string url)
     {
-        try { Process.Start(new ProcessStartInfo(UpdateService.RepositoryUrl) { UseShellExecute = true }); }
+        try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
         catch (Exception ex) { AppPaths.LogError(ex); }
     }
 
