@@ -21,7 +21,7 @@ jobs:
   release:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Version
         id: ver
@@ -31,7 +31,7 @@ jobs:
           echo "version=$v" >> "$GITHUB_OUTPUT"
           if [[ "$v" == *-* ]]; then echo "pre=--pre" >> "$GITHUB_OUTPUT"; else echo "pre=" >> "$GITHUB_OUTPUT"; fi
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 8.0.x
 
@@ -54,6 +54,6 @@ jobs:
           vpk download github --repoUrl $repo --token ${{ secrets.GITHUB_TOKEN }} ${{ steps.ver.outputs.pre }}
           if ($LASTEXITCODE -ne 0) { Write-Host "Předchozí release nenalezen – první vydání."; $global:LASTEXITCODE = 0 }
           vpk pack -u $env:APP_ID -v ${{ steps.ver.outputs.version }} -p publish -e ScContractTracker.exe `
-                   --packTitle "SC Contract Tracker" -i src/ScContractTracker.App/Assets/app.ico
+                   --packTitle "SC Contract Tracker" --shortcuts StartMenuRoot -i src/ScContractTracker.App/Assets/app.ico
           vpk upload github --repoUrl $repo --token ${{ secrets.GITHUB_TOKEN }} --publish ${{ steps.ver.outputs.pre }} `
                    --releaseName "SC Contract Tracker ${{ steps.ver.outputs.version }}" --tag v${{ steps.ver.outputs.version }}

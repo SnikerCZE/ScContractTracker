@@ -42,7 +42,7 @@ public class GameDataTests
     }
 
     [Fact]
-    public void Details_provider_uses_disk_override_and_derives_description()
+    public async Task Details_provider_uses_disk_override_and_derives_description()
     {
         var root = Path.Combine(Path.GetTempPath(), "sct-game-" + Guid.NewGuid());
         var locDir = Path.Combine(root, "data", "Localization", "english");
@@ -52,7 +52,7 @@ public class GameDataTests
         try
         {
             var provider = new P4kContractDetailsProvider(root, "english");
-            provider.InitializeAsync().GetAwaiter().GetResult();
+            await provider.InitializeAsync();
             Assert.True(provider.IsReady);
 
             var byRecord = provider.Lookup("Covalex_Local", null, null)!;

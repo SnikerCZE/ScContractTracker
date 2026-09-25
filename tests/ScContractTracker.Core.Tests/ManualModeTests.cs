@@ -90,6 +90,6 @@ public class ManualModeTests
         var plain = new MobiGlasParser(GameLanguagePack.BuiltIn.English)
             .Parse(MobiGlasParserTests.LoadFixture("ocr_accepted_uwc_cursor_3440x1440.txt"));
         Assert.Null(plain.Detail!.Fee);
-        Assert.True(plain.Detail.Description!.Contains("service fee"));
+        Assert.Contains("service fee", plain.Detail.Description!);
     }
 }
