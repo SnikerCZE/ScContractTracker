@@ -249,5 +249,7 @@
   "Confirm.DeleteAll": "Smazat všech {0} kontraktů zobrazených v historii (podle aktuálního filtru období)? Nelze vrátit zpět.",
   "Mode.LogEndLabel": "Konec v logu",
   "Mode.LogEndNote": "Jen pro informaci – aUEC/h se počítá od přijetí do ručního dokončení.",
-  "Install.DesktopShortcutPrompt": "Vytvořit zástupce SC Contract Tracker na ploše?\n\nAplikaci najdeš také v nabídce Start."
+  "Install.DesktopShortcutPrompt": "Vytvořit zástupce SC Contract Tracker na ploše?\n\nAplikaci najdeš také v nabídce Start.",
+  "About.Support": "Podpora vývoje",
+  "About.SupportNote": "Aplikace je zdarma. Pokud ti pomáhá, můžeš vývoj dobrovolně podpořit – nic se tím neodemyká."
 }

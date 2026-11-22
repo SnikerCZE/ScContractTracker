@@ -249,5 +249,7 @@
   "Confirm.DeleteAll": "Alle {0} im Verlauf angezeigten Verträge löschen (aktueller Zeitraumfilter)? Kann nicht rückgängig gemacht werden.",
   "Mode.LogEndLabel": "Ende im Log",
   "Mode.LogEndNote": "Nur zur Information – aUEC/h wird von der Annahme bis zum manuellen Abschluss berechnet.",
-  "Install.DesktopShortcutPrompt": "Eine Verknüpfung zu SC Contract Tracker auf dem Desktop erstellen?\n\nDie Anwendung ist auch im Startmenü zu finden."
+  "Install.DesktopShortcutPrompt": "Eine Verknüpfung zu SC Contract Tracker auf dem Desktop erstellen?\n\nDie Anwendung ist auch im Startmenü zu finden.",
+  "About.Support": "Entwicklung unterstützen",
+  "About.SupportNote": "Die Anwendung ist kostenlos. Wenn sie dir hilft, kannst du die Entwicklung freiwillig unterstützen – dadurch wird nichts freigeschaltet."
 }
